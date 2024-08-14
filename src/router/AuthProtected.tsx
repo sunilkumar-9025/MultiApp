@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
+import { getLoggedinUser } from "../components/Common/Utils";
+import { Navigate } from "react-router-dom";
 
-const AuthProtected = () => {
-  return (
-    <div>AuthProtected</div>
-  )
-}
+const AuthProtected = (props: any) => {
+  const userProfileSession = getLoggedinUser();
 
-export default AuthProtected
+  if (!userProfileSession) {
+    return <Navigate to={{ pathname: "/login" }} />;
+  }
+
+  return <>{props?.children}</>;
+};
+
+export default AuthProtected;

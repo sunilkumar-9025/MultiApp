@@ -1,19 +1,35 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { publicRoute } from "./allRoutes";
+import { publicRoutes, protectedRoutes } from "./allRoutes";
 import NonAuthLayout from "../components/Layout/NonAuthLayout";
-
+import AuthProtected from "./AuthProtected";
+import AuthLayout from "../components/Layout/AuthLayout";
 const index = () => {
   return (
     <React.Fragment>
       <Routes>
-        {publicRoute?.map((route, idx) => (
-          <Route
-            key={idx}
-            path={route.path}
-            element={<NonAuthLayout>{route.component}</NonAuthLayout>}
-          />
-        ))}
+        <Route>
+          {publicRoutes?.map((route, idx) => (
+            <Route
+              key={idx}
+              path={route.path}
+              element={<NonAuthLayout>{route.component}</NonAuthLayout>}
+            />
+          ))}
+        </Route>
+        <Route>
+          {protectedRoutes?.map((route, idx) => (
+            <Route
+              key={idx}
+              path={route.path}
+              element={
+                <AuthProtected>
+                  <AuthLayout>{route.component}</AuthLayout>
+                </AuthProtected>
+              }
+            />
+          ))}
+        </Route>
       </Routes>
     </React.Fragment>
   );
